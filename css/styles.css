@@ -482,3 +482,13 @@ body {
     border-radius: 12px 12px 12px 0;
     margin-right: auto;
 }
+.contact-info-panel {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.contact-info-panel div {
+  margin-bottom: 4px;
+}

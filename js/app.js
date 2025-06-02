@@ -1,5 +1,43 @@
 // 메인 앱 코드
-let contacts = [];
+let contacts = [
+  {
+    id: 1,
+    name: '김민준',
+    email: 'kimmj@example.com',
+    company: '포세이돈',
+    phone: '010-1234-5678'
+  },
+  {
+    id: 2,
+    name: '이서연',
+    email: 'seoyeon@example.com',
+    company: '로비앤컴퍼니',
+    phone: '010-2345-6789'
+  },
+  {
+    id: 3,
+    name: '박지훈',
+    email: 'parkjh@example.com',
+    company: '피닉스랩',
+    phone: '010-3456-7890'
+  },
+  {
+    id: 4,
+    name: '최수아',
+    email: 'choisoa@example.com',
+    company: '위즈덤',
+    phone: '010-4567-8901'
+  },
+  {
+    id: 5,
+    name: '정도윤',
+    email: 'jungdy@example.com',
+    company: '에버랩',
+    phone: '010-5678-9012'
+  }
+];
+
+// 메인 앱 코드
 let messageData = {};
 let summaryData = {};
 let selectedContactId = null;
@@ -94,7 +132,7 @@ async function initializeData() {
     try {
         const { contacts: csvContacts, messages: csvMessages } = await loadCSVData();
         
-        contacts = processContactsData(csvContacts);
+        //contacts = processContactsData(csvContacts);
         messageData = processMessagesData(csvMessages);
         
         // 각 연락처의 마지막 메시지 업데이트
@@ -198,11 +236,10 @@ function filterContacts(searchTerm) {
     });
 }
 
-// 연락처 선택 함수
+// 연락처 선택 함수에 상세 정보 표시 추가
 function selectContact(contactId) {
     selectedContactId = contactId;
-    
-    // 활성화된 연락처 카드 스타일 변경
+
     document.querySelectorAll('.contact-card').forEach(card => {
         if (parseInt(card.dataset.id) === contactId) {
             card.classList.add('active');
@@ -210,21 +247,27 @@ function selectContact(contactId) {
             card.classList.remove('active');
         }
     });
-    
-    // 선택된 연락처 이름 표시
+
     const selectedContact = contacts.find(contact => contact.id === contactId);
     document.getElementById('selected-contact-name').textContent = selectedContact.name;
-    
-    // 메시지 검색창 초기화
+
+    // ✅ 연락처 정보 표시
+    const infoPanel = document.getElementById('contact-info');
+    if (infoPanel) {
+        infoPanel.innerHTML = `
+            <div><strong>${selectedContact.name}</strong></div>
+            <div>${selectedContact.email || '이메일 정보 없음'}</div>
+            <div>${selectedContact.company || '소속 정보 없음'}</div>
+            <div>${selectedContact.phone || '전화번호 없음'}</div>
+        `;
+    }
+
     document.getElementById('message-search').value = '';
     searchTerm = '';
-    
-    // 대화 내용 로드
     loadConversation(contactId);
-    
-    // AI 요약 로드
     loadSummary(contactId);
 }
+
 
 // 대화 내용 로드 함수
 function loadConversation(contactId) {
