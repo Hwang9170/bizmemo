@@ -7,7 +7,7 @@ async function loadCSVData() {
         const contacts = parseCSV(contactsText);
         
         // 메시지 데이터 로드
-        const messagesResponse = await fetch('data/messages.csv');
+        const messagesResponse = await fetch('data/messages_detailed_with_alternating_senders.csv');
         const messagesText = await messagesResponse.text();
         const messages = parseCSV(messagesText);
         
@@ -80,16 +80,18 @@ function processMessagesData(csvMessages) {
             messagesByContactId[contactId] = [];
         }
         
-        messagesByContactId[contactId].push({
-            id: parseInt(message.message_id),
-            platform: message.platform,
-            content: message.content,
-            timestamp: message.timestamp,
-            date: message.date,
-            summary: message.summary || null,
-            fullText: message.full_text || null,
-            isExpanded: false // 전화 메시지 확장 상태 추적
-        });
+ messagesByContactId[contactId].push({
+    id: parseInt(message.message_id),
+    platform: message.platform,
+    content: message.content,
+    timestamp: message.timestamp,
+    date: message.date,
+    sender: message.sender || 'contact', // 추가
+    summary: message.summary || null,
+    fullText: message.full_text || null,
+    isExpanded: false
+});
+
     });
     
     return messagesByContactId;

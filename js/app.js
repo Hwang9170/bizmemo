@@ -278,7 +278,11 @@ function loadConversation(contactId) {
         // 해당 날짜의 메시지들 표시
         messagesByDate[date].forEach(message => {
             const messageElement = document.createElement('div');
-            messageElement.className = `message-bubble message-${message.platform}`;
+messageElement.classList.add(
+  'message-bubble',
+  `message-${message.platform}`,
+  message.sender === 'user' ? 'sent-message' : 'received-message'
+);
             messageElement.dataset.id = message.id;
             
             // 플랫폼 아이콘 및 이름
