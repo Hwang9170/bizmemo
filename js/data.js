@@ -1,3 +1,4 @@
+
 // CSV 파일 로드 및 파싱 함수
 async function loadCSVData() {
     try {
@@ -125,7 +126,7 @@ function generateSummaryData(contactId, messages, startDate, endDate) {
     };
 }
 
-// 키워드 추출 함수 (간단 구현)
+// 키워드 추출 함수
 function extractKeywords(messages) {
     const wordCounts = {};
     const stopWords = ['안녕하세요', '감사합니다', '부탁드립니다', '확인', '네', '아니요', '그럼', '그리고', '또한'];
